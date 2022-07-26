@@ -1,0 +1,74 @@
+package com.jpa.example.Dao;
+
+import com.jpa.example.models.Categorie;
+
+import javax.persistence.EntityManager;
+import java.util.List;
+
+
+public class CategorieDaoImp implements ICategorie{
+    @Override
+    public boolean save(Categorie o) {
+        EntityManager em = PersistanceDao.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(o);
+            em.getTransaction().commit();
+            em.close();
+            return true;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            System.err.println(e.getMessage());
+            em.close();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean delete(Categorie o) {
+        EntityManager em = PersistanceDao.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.remove(o);
+            em.getTransaction().commit();
+            em.close();
+            return true;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            System.err.println(e.getMessage());
+            em.close();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean update(Categorie o) {
+        EntityManager em = PersistanceDao.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(o);
+            em.getTransaction().commit();
+            em.close();
+            return true;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            System.err.println(e.getMessage());
+            em.close();
+            return false;
+        }
+    }
+
+    @Override
+    public Categorie findById(Long s) {
+        EntityManager em = PersistanceDao.getEntityManager();
+        return em.createQuery("SELECT k FROM Categorie k WHERE k.id=:id", Categorie.class)
+                .setParameter("id", s)
+                .getSingleResult();
+    }
+
+    @Override
+    public List<Categorie> findAll() {
+        EntityManager em = PersistanceDao.getEntityManager();
+        return em.createQuery("SELECT k FROM Categorie k", Categorie.class).getResultList();
+    }
+}
