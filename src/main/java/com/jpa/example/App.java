@@ -30,22 +30,14 @@ public class App
         //Appel de la vue Users
         VueUsers vueUsers = new VueUsers();
 
-        //MENU PRINCIPAL
         Scanner input = new Scanner(System.in);
        //Variable choix
         int choix1;
         do {
+            //MENU PRINCIPAL
             System.out.println("1- User");
             System.out.println("2- Produit");
             System.out.println("3- Categorie");
-           /*
-            System.out.println("4- Lister User");
-            System.out.println("5- Lister Produit");
-            System.out.println("6- Lister Categorie");
-            System.out.println("7- Supprimer produit");
-            System.out.println("8- Modifier produit");
-
-            */
             System.out.println("4- Quitter");
             choix1=input.nextInt();
             switch(choix1){
@@ -61,7 +53,9 @@ public class App
                     default:
                         break;
             }
-            /*
+        }while(choix1 != 4);
+        PersistanceDao.closeEntityManagerFactory();
+           /*
             switch(choix){
 
                 case 1:
@@ -175,9 +169,6 @@ public class App
             }
 
              */
-
-        }while(choix1 != 4);
-        PersistanceDao.closeEntityManagerFactory();
        /* EntityManagerFactory emf = null;
         EntityManager entityManager = null;
         EntityTransaction transaction = null;
